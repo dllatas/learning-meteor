@@ -1,29 +1,21 @@
+// This code will run on the client and the server
+Images = new Mongo.Collection("images");
+
 if (Meteor.isClient) {
-    var img_data = [
-      {
-        img_src: "universitario02.jpg",
-        img_alt: "Universitario de Deportes !!"
-      },
-      {
-        img_src: "lolo01.jpg",
-        img_alt: "Lolo Fernandez !!"
-      },
-      {
-        img_src: "rainer01.jpg",
-        img_alt: "Rainer Torres !!"
-      }
-    ];
-    Template.images.helpers({images: img_data});
+    // Template.images.helpers({images: img_data});
+    Template.images.helpers({images: Images.find()});
     // Add a listener
     Template.images.events({
       "click .js-image":function(event){
         // alert("m'axima expresion!");
-        console.log(event);
+        // console.log(event);
         $(event.target).css("width","50px");
+      },
+      "click .js-del-image":function(event){
+        var image_id = this._id;
+        $("#"+image_id).hide("slow", function(){
+          Images.remove({"_id": image_id});  
+        });
       }
     });
-}
-
-if (Meteor.isServer) {
-    console.log("i am the server");
 }

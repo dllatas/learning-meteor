@@ -1,7 +1,34 @@
-// This code will run on the client and the server
-Images = new Mongo.Collection("images");
+    // Routing
+    Router.configure({
+      layoutTemplate: "ApplicationLayout"
+    });
 
-if (Meteor.isClient) {
+    Router.route("/", function() {
+      this.render("welcome", {
+        to:"main"
+      });
+    });
+
+    Router.route("/images", function() {
+      this.render("navbar", {
+        to: "navbar"
+      });
+      this.render("images", {
+        to: "main"
+      });
+    });
+
+    Router.route("/image/:_id", function() {
+      this.render("image", {
+        to: "main",
+        data: function(){
+          return Images.findOne({_id:this.params._id});
+        }
+      });
+    });
+
+
+    // Infinite Scroll
     Session.set("imageLimit", 3);
     // Capture the scroll event
     lastScrollTop = 0;
@@ -121,4 +148,3 @@ if (Meteor.isClient) {
         return false; // Stops the default event 
       }
       });
-}

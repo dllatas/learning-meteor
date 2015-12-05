@@ -47,10 +47,12 @@
           lastScrollTop = scrollTop;
         }
     });
+
     // Login configuration
     Accounts.ui.config({
       passwordSignupFields: "USERNAME_AND_EMAIL"
     });
+
     // Custom helpers that provide functionality
     Template.body.helpers({username: function(){
       if (Meteor.user()) {
@@ -61,6 +63,8 @@
         return "Anonymous internet user";
       }
     }});
+
+
     Template.images.helpers({
       images: function() {
         if (Session.get("userFilter")) { // a filter was set
@@ -147,4 +151,4 @@
         $("#image_add_form").modal("hide");
         return false; // Stops the default event 
       }
-      });
+    });
